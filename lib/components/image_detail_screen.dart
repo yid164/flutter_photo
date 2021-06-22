@@ -13,6 +13,15 @@ class ImageDetailScreen extends StatefulWidget {
 }
 
 class _ImageDetailScreen extends State<ImageDetailScreen> {
+  late int _currentIndex;
+  late String _currentImagePath;
+
+  @override
+  void initState() {
+    _currentIndex = 0;
+    _currentImagePath = widget.imageDetail.afterImagePath!;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +53,7 @@ class _ImageDetailScreen extends State<ImageDetailScreen> {
             color: Colors.transparent,
             borderRadius: BorderRadius.circular(16),
             image: DecorationImage(
-                image: AssetImage(widget.imageDetail.afterImagePath!),
+                image: AssetImage(_currentImagePath),
                 fit: BoxFit.cover)),
       ),
     );
@@ -55,11 +64,21 @@ class _ImageDetailScreen extends State<ImageDetailScreen> {
     return Container(
       width: size.width,
       child: CupertinoSegmentedControl<int>(
-          padding: EdgeInsets.all(defaultPadding),
-          children: imageControl, onValueChanged: (int val) {}),
+        padding: EdgeInsets.all(defaultPadding),
+        children: imageControl,
+        onValueChanged: (int val) {
+          onIndexChanged(val);
+        },
+        groupValue: _currentIndex,
+      ),
     );
+  }
 
-
+  void onIndexChanged(int index) {
+    setState(() {
+      _currentIndex = index;
+      _currentImagePath = index == 0 ? widget.imageDetail.afterImagePath! : widget.imageDetail.beforeImagePath!;
+    });
   }
 
   final Map<int, Widget> imageControl = const <int, Widget> {

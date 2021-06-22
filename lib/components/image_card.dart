@@ -21,11 +21,12 @@ class ImageCard extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all(defaultPadding),
               decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(16),
-                  image: DecorationImage(
-                      image: AssetImage(imageDetail.afterImagePath!),
-                      fit: BoxFit.cover)),
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(16),
+                image: DecorationImage(
+                    image: AssetImage(imageDetail.afterImagePath!),
+                    fit: BoxFit.cover),
+              ),
             ),
           ),
           Padding(
@@ -57,8 +58,9 @@ class EmptyCard extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all(defaultPadding),
               decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(16),),
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(16),
+              ),
             ),
           ),
           Padding(
@@ -72,5 +74,4 @@ class EmptyCard extends StatelessWidget {
       ),
     );
   }
-
 }
