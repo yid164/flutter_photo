@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+
+import 'components/image_card.dart';
 
 List<ImageDetail> _images = [
   ImageDetail(
@@ -35,6 +38,8 @@ List<ImageDetail> _images = [
       afterImagePath: "lib/images/16.jpg"),
 ];
 
+const defaultPadding = 16.0;
+
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -59,40 +64,18 @@ class HomePage extends StatelessWidget {
               height: 40,
             ),
             Expanded(
-                child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 30,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
-                ),
-              ),
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10),
-                itemBuilder: (context, index) {
-                  return RawMaterialButton(
-                    onPressed: () => {},
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        image: DecorationImage(
-                          image: AssetImage(_images[index].afterImagePath!),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  );
-                },
-                itemCount: _images.length,
-              ),
-            )),
+              child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: defaultPadding),
+                  child: GridView.builder(
+                      itemCount: _images.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          mainAxisSpacing: defaultPadding,
+                          crossAxisSpacing: defaultPadding,
+                          childAspectRatio: 0.75),
+                      itemBuilder: (context, index) => ImageCard(
+                          imageDetail: _images[index], onPressed: () {}))),
+            )
           ],
         ),
       ),
