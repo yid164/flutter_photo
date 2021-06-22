@@ -3,9 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_photo/components/image_detail_screen.dart';
 import 'package:flutter_photo/models/image_detail.dart';
 import 'package:flutter_photo/shared/shared_file.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'dart:io';
 import 'components/image_card.dart';
 
 class HomePage extends StatelessWidget {
@@ -66,6 +64,7 @@ class HomePage extends StatelessWidget {
                             MaterialPageRoute(
                               builder: (context) => ImageDetailScreen(
                                 imageDetail: imageDetail,
+                                saveImage: () => constImages.add(imageDetail),
                               ),
                             ),
                           ),
@@ -78,17 +77,5 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  late File _image;
-  final imagePicker = ImagePicker();
-
-  getImage() async {
-    final image = await imagePicker.getImage(source: ImageSource.gallery);
-    if (image != null) {
-      _image = File(image.path);
-      print("-=-=-=-=-=-=-=-=-=-");
-      print(_image.path);
-    }
   }
 }
