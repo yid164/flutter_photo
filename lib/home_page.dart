@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
+import 'package:flutter_photo/components/image_detail_screen.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import 'components/image_card.dart';
 
 List<ImageDetail> _images = [
@@ -65,21 +67,47 @@ class HomePage extends StatelessWidget {
             ),
             Expanded(
               child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: defaultPadding),
-                  child: GridView.builder(
-                      itemCount: _images.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          mainAxisSpacing: defaultPadding,
-                          crossAxisSpacing: defaultPadding,
-                          childAspectRatio: 0.75),
-                      itemBuilder: (context, index) => ImageCard(
-                          imageDetail: _images[index], onPressed: () {}))),
+                padding: EdgeInsets.symmetric(horizontal: defaultPadding),
+                child: GridView.builder(
+                    itemCount: _images.length + 1,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        mainAxisSpacing: defaultPadding,
+                        crossAxisSpacing: defaultPadding,
+                        childAspectRatio: 0.75),
+                    itemBuilder: (context, index) {
+                      if (index < _images.length) {
+                        return ImageCard(
+                          imageDetail: _images[index],
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ImageDetailScreen(imageDetail: _images[index],),
+                            ),
+                          ),
+                        );
+                      } else {
+                        return EmptyCard(onPressed: () => getImage());
+                      }
+                    }),
+              ),
             )
           ],
         ),
       ),
     );
+  }
+
+  late File _image;
+  final imagePicker = ImagePicker();
+
+  getImage() async {
+    final image = await imagePicker.getImage(source: ImageSource.gallery);
+    if (image != null) {
+      _image = File(image.path);
+      print("-=-=-=-=-=-=-=-=-=-");
+      print(_image.path);
+    }
   }
 }
 
