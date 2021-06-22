@@ -26,6 +26,7 @@ class _ImageDetailScreen extends State<ImageDetailScreen> {
         child: Column(
           children: [
             buildPhotoBody(),
+            buildSegmentedControl()
           ],
         ),
       )
@@ -36,12 +37,8 @@ class _ImageDetailScreen extends State<ImageDetailScreen> {
     Size size = MediaQuery.of(context).size;
     return Expanded(
       child: Container(
-        margin: EdgeInsets.only(
-          bottom: size.height * 0.1,
-          left: size.width * 0.05,
-          right: size.width * 0.05,
-          top: size.height * 0.02,
-        ),
+        margin: EdgeInsets.fromLTRB(size.width * 0.05, size.height * 0.02,
+            size.width * 0.05, size.height * 0.1),
         padding: EdgeInsets.all(defaultPadding),
         decoration: BoxDecoration(
             color: Colors.transparent,
@@ -52,4 +49,27 @@ class _ImageDetailScreen extends State<ImageDetailScreen> {
       ),
     );
   }
+
+  Widget buildSegmentedControl() {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      width: size.width,
+      child: CupertinoSegmentedControl<int>(
+          padding: EdgeInsets.all(defaultPadding),
+          children: imageControl, onValueChanged: (int val) {}),
+    );
+
+
+  }
+
+  final Map<int, Widget> imageControl = const <int, Widget> {
+    0: Padding(
+      padding: EdgeInsets.all(defaultPadding),
+      child: Text('After'),
+    ),
+    1: Padding(
+      padding: EdgeInsets.all(defaultPadding),
+      child: Text('Before'),
+    ),
+  };
 }
