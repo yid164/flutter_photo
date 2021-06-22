@@ -12,28 +12,31 @@ class ImageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: Container(
-            padding: EdgeInsets.all(defaultPadding),
-            decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(16),
-                image: DecorationImage(
-                    image: AssetImage(imageDetail.afterImagePath!),
-                    fit: BoxFit.cover)),
+    return GestureDetector(
+      onTap: () => onPressed,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.all(defaultPadding),
+              decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(16),
+                  image: DecorationImage(
+                      image: AssetImage(imageDetail.afterImagePath!),
+                      fit: BoxFit.cover)),
+            ),
           ),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: defaultPadding / 6),
-          child: Text(
-            imageDetail.date,
-            style: TextStyle(color: Colors.grey),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: defaultPadding / 6),
+            child: Text(
+              imageDetail.date,
+              style: TextStyle(color: Colors.grey),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
