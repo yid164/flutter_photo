@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_photo/home_page.dart';
+import 'package:flutter_photo/models/image_detail.dart';
+import 'package:flutter_photo/shared/shared_file.dart';
 
 class ImageCard extends StatelessWidget {
   final ImageDetail imageDetail;

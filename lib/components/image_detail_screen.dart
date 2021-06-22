@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_photo/home_page.dart';
+import 'package:flutter_photo/models/image_detail.dart';
+import 'package:flutter_photo/shared/shared_file.dart';
 
 class ImageDetailScreen extends StatefulWidget {
   final ImageDetail imageDetail;
@@ -9,7 +10,6 @@ class ImageDetailScreen extends StatefulWidget {
 
   @override
   State<ImageDetailScreen> createState() => _ImageDetailScreen();
-
 }
 
 class _ImageDetailScreen extends State<ImageDetailScreen> {
@@ -25,21 +25,21 @@ class _ImageDetailScreen extends State<ImageDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context),
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => Navigator.pop(context),
+          ),
+          title: Text(widget.imageDetail.date),
         ),
-        title: Text(widget.imageDetail.date),
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            buildPhotoBody(),
-            buildSegmentedControl()
-          ],
-        ),
-      )
-    );
+        body: SafeArea(
+          child: Column(
+            children: [
+              buildPhotoBody(),
+              buildSegmentedControl(),
+            ],
+          ),
+        ));
   }
 
   Widget buildPhotoBody() {
@@ -50,11 +50,13 @@ class _ImageDetailScreen extends State<ImageDetailScreen> {
             size.width * 0.05, size.height * 0.1),
         padding: EdgeInsets.all(defaultPadding),
         decoration: BoxDecoration(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.circular(16),
-            image: DecorationImage(
-                image: AssetImage(_currentImagePath),
-                fit: BoxFit.cover)),
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(16),
+          image: DecorationImage(
+            image: AssetImage(_currentImagePath),
+            fit: BoxFit.cover,
+          ),
+        ),
       ),
     );
   }
@@ -77,11 +79,13 @@ class _ImageDetailScreen extends State<ImageDetailScreen> {
   void onIndexChanged(int index) {
     setState(() {
       _currentIndex = index;
-      _currentImagePath = index == 0 ? widget.imageDetail.afterImagePath! : widget.imageDetail.beforeImagePath!;
+      _currentImagePath = index == 0
+          ? widget.imageDetail.afterImagePath!
+          : widget.imageDetail.beforeImagePath!;
     });
   }
 
-  final Map<int, Widget> imageControl = const <int, Widget> {
+  final Map<int, Widget> imageControl = const <int, Widget>{
     0: Padding(
       padding: EdgeInsets.all(defaultPadding),
       child: Text('After'),
