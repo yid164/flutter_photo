@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_photo/components/image_detail_screen.dart';
+import 'package:flutter_photo/models/image_detail.dart';
 import 'package:flutter_photo/shared/shared_file.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'dart:io';
 import 'components/image_card.dart';
 
@@ -46,12 +48,28 @@ class HomePage extends StatelessWidget {
                           onPressed: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ImageDetailScreen(imageDetail: constImages[index],),
+                              builder: (context) => ImageDetailScreen(
+                                imageDetail: constImages[index],
+                              ),
                             ),
                           ),
                         );
                       } else {
-                        return EmptyCard(onPressed: () => getImage());
+                        DateTime now = DateTime.now();
+                        String formattedDate =
+                            DateFormat('MMM dd, yyyy').format(now);
+                        ImageDetail imageDetail =
+                            ImageDetail(date: formattedDate);
+                        return EmptyCard(
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ImageDetailScreen(
+                                imageDetail: imageDetail,
+                              ),
+                            ),
+                          ),
+                        );
                       }
                     }),
               ),

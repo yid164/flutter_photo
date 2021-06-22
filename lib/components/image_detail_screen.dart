@@ -4,7 +4,7 @@ import 'package:flutter_photo/models/image_detail.dart';
 import 'package:flutter_photo/shared/shared_file.dart';
 
 class ImageDetailScreen extends StatefulWidget {
-  final ImageDetail imageDetail;
+  ImageDetail imageDetail;
 
   ImageDetailScreen({required this.imageDetail});
 
@@ -14,12 +14,21 @@ class ImageDetailScreen extends StatefulWidget {
 
 class _ImageDetailScreen extends State<ImageDetailScreen> {
   late int _currentIndex;
-  late String _currentImagePath;
+  late String? _currentImagePath;
 
   @override
   void initState() {
     _currentIndex = 0;
-    _currentImagePath = widget.imageDetail.afterImagePath!;
+    if (widget.imageDetail.afterImagePath == null) {
+      if (widget.imageDetail.beforeImagePath == null) {
+        _currentImagePath = null;
+      } else {
+        _currentImagePath = widget.imageDetail.beforeImagePath!;
+        _currentIndex = 1;
+      }
+    } else {
+      _currentImagePath = widget.imageDetail.afterImagePath!;
+    }
   }
 
   @override
@@ -50,12 +59,12 @@ class _ImageDetailScreen extends State<ImageDetailScreen> {
             size.width * 0.05, size.height * 0.1),
         padding: EdgeInsets.all(defaultPadding),
         decoration: BoxDecoration(
-          color: Colors.transparent,
+          color: _currentImagePath != null ? Colors.transparent : Colors.grey,
           borderRadius: BorderRadius.circular(16),
-          image: DecorationImage(
-            image: AssetImage(_currentImagePath),
+          image: _currentImagePath != null ? DecorationImage(
+            image: AssetImage(_currentImagePath!),
             fit: BoxFit.cover,
-          ),
+          ) : null,
         ),
       ),
     );
@@ -80,8 +89,8 @@ class _ImageDetailScreen extends State<ImageDetailScreen> {
     setState(() {
       _currentIndex = index;
       _currentImagePath = index == 0
-          ? widget.imageDetail.afterImagePath!
-          : widget.imageDetail.beforeImagePath!;
+          ? widget.imageDetail.afterImagePath
+          : widget.imageDetail.beforeImagePath;
     });
   }
 
